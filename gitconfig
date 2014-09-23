@@ -14,22 +14,15 @@
   diff = diff --word-diff
   dc = diff --cached
   pu = pull --rebase
-[core]
-	editor = /usr/bin/vim
-	excludesfile = /Users/johannes/.gitignore_global
-[push]
-	default = simple
-[diff]
-	external = /Users/johannes/bin/git-diff-cmd.sh
-[merge]
-	tool = opendiff
-[github]
-	user = jstaffans
-[ghi]
-	token = !security find-internet-password -a jstaffans -s github.com -l 'ghi token' -w
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[github]
+	user = jstaffans
+[ghi]
+	token = !security find-internet-password -a jstaffans -s github.com -l 'ghi token' -w
+[include]
+  path = .gitconfig.local
