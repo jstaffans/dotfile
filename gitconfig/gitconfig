@@ -1,0 +1,35 @@
+[alias]
+  ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+  lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+  ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+  lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
+  dl = "!git ll -1"
+  dlc = diff --cached HEAD^
+  cp = cherry-pick
+  st = status
+  cl = clone
+  ci = commit
+  co = checkout
+  br = branch 
+  diff = diff --word-diff
+  dc = diff --cached
+  pu = pull --rebase
+[core]
+	editor = /usr/bin/vim
+	excludesfile = /Users/johannes/.gitignore_global
+[push]
+	default = simple
+[diff]
+	external = /Users/johannes/bin/git-diff-cmd.sh
+[merge]
+	tool = opendiff
+[github]
+	user = jstaffans
+[ghi]
+	token = !security find-internet-password -a jstaffans -s github.com -l 'ghi token' -w
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
