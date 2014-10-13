@@ -12,20 +12,15 @@ set expandtab
 set nojoinspaces
 set autowrite
 
+" detectindent
+:autocmd BufReadPost * :DetectIndent 
 
 let mapleader = ","
 let maplocalleader = "-"
 
-" Make vim work better with predefined US keyboard key combinations
-nmap < [
-nmap > ]
-omap < [
-omap > ]
-xmap < [
-xmap > ]
-
 " NERDTree
 nnoremap <Leader>N :NERDTree<CR>
+nnoremap <Leader>r :NERDTreeFind<CR>
 
 " Fuzzy Finder
 nnoremap <Leader>f :FufFile<CR>
