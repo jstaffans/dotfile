@@ -11,6 +11,7 @@ set shiftwidth:2
 set expandtab
 set nojoinspaces
 set autowrite
+set relativenumber 
 
 " detectindent
 :autocmd BufReadPost * :DetectIndent 
