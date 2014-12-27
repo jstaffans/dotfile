@@ -14,10 +14,27 @@ set autowrite
 set relativenumber 
 
 " detectindent
-:autocmd BufReadPost * :DetectIndent 
+" :autocmd BufReadPost * :DetectIndent 
 
 let mapleader = ","
 let maplocalleader = "-"
+
+" fugitive git bindings
+nnoremap <LocalLeader>ga :Git add %:p<CR><CR>
+nnoremap <LocalLeader>gs :Gstatus<CR>
+nnoremap <LocalLeader>gc :Gcommit -v -q<CR>
+nnoremap <LocalLeader>gt :Gcommit -v -q %:p<CR>
+nnoremap <LocalLeader>gd :Gdiff<CR>
+nnoremap <LocalLeader>ge :Gedit<CR>
+nnoremap <LocalLeader>gr :Gread<CR>
+nnoremap <LocalLeader>gw :Gwrite<CR><CR>
+nnoremap <LocalLeader>gl :silent! Glog<CR>:bot copen<CR>
+nnoremap <LocalLeader>gp :Ggrep<Space>
+nnoremap <LocalLeader>gm :Gmove<Space>
+nnoremap <LocalLeader>gb :Git branch<Space>
+nnoremap <LocalLeader>go :Git checkout<Space>
+nnoremap <LocalLeader>gps :Dispatch! git push<CR>
+nnoremap <LocalLeader>gpl :Dispatch! git pull<CR>
 
 " NERDTree
 nnoremap <Leader>N :NERDTree<CR>
@@ -67,6 +84,9 @@ nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
 " activate Snippets with Shift + Tab
 let g:snippetsEmu_key = "<S-Tab>"
+
+" JSON pretty print with Python
+nnoremap <f5> :%!python -m json.tool<CR>:w<CR>
 
 "Emmet expand
 let g:user_emmet_expandabbr_key = '<c-e>'
