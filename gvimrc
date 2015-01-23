@@ -12,9 +12,9 @@ set expandtab
 set nojoinspaces
 set autowrite
 set relativenumber 
+set smartcase
 
-" detectindent
-" :autocmd BufReadPost * :DetectIndent 
+autocmd BufRead,BufNewFile *.jsx,*.js setlocal shiftwidth=4 tabstop=4
 
 let mapleader = ","
 let maplocalleader = "-"
