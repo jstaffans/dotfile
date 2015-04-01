@@ -19,6 +19,9 @@ autocmd BufRead,BufNewFile *.jsx,*.js setlocal shiftwidth=4 tabstop=4
 let mapleader = ","
 let maplocalleader = "-"
 
+nnoremap <silent> <Leader>+ :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
+
 " fugitive git bindings
 nnoremap <LocalLeader>ga :Git add %:p<CR><CR>
 nnoremap <LocalLeader>gs :Gstatus<CR>
@@ -77,19 +80,10 @@ nnoremap <Leader>V :%Eval <CR>
 vnoremap <Leader>v :Eval <CR>
 vnoremap <Leader>V :%Eval <CR>
 
-let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let', '^fact']
-
 " substitute all
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
-
-" activate Snippets with Shift + Tab
-let g:snippetsEmu_key = "<S-Tab>"
 
 " JSON pretty print with Python
 nnoremap <f5> :%!python -m json.tool<CR>:w<CR>
 
-"Emmet expand
-let g:user_emmet_expandabbr_key = '<c-e>'
-let g:user_emmet_install_global = 0
-autocmd FileType html,css,scss EmmetInstall
 
