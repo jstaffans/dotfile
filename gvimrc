@@ -44,6 +44,9 @@ inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
  
+nmap <F2> :set relativenumber!<CR>
+imap <F2> :set relativenumber!<CR>
+
 " vimgrep next/previous match
 nmap <F3> :cn<Enter>
 imap <F3> :cn<Enter>
