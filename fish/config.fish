@@ -34,3 +34,4 @@ function fish_prompt
 end
 
 . $HOME/.config/fish/local-config.fish
+. $HOME/.config/fish/functions/z.fish
