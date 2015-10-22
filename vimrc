@@ -2,9 +2,12 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
-" I want to be ibdknox when I grow up
-colorscheme elrodeo
+set background=dark
+colorscheme solarized
 
+set nocp
+set wildmenu
+set mouse=a
 set guifont=Menlo:h12
 set tabstop=2
 set shiftwidth:2
