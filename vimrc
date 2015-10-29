@@ -26,8 +26,8 @@ nnoremap <silent> <Leader>+ :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 " NERDTree
-nnoremap <Leader>N :NERDTree<CR>
-nnoremap <Leader>r :NERDTreeFind<CR>
+nnoremap <Leader>N :NERDTreeFind<CR>
+nnoremap <Leader>M :NERDTreeToggle<CR>
 
 " Fuzzy Finder
 nnoremap <Leader>f :FufFile<CR>
