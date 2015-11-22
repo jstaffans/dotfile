@@ -2,8 +2,12 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
+set t_Co=256   
 set background=dark
-colorscheme solarized
+colorscheme PaperColor
+
+set hidden
+set backspace=indent,eol,start
 
 set nocp
 set wildmenu
@@ -74,5 +78,8 @@ nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
 " JSON pretty print with Python
 nnoremap <f5> :%!python -m json.tool<CR>:w<CR>
+
+
+
 
 
