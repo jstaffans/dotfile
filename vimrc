@@ -21,7 +21,7 @@ set autowrite
 set relativenumber 
 set smartcase
 
-autocmd BufRead,BufNewFile *.jsx,*.js setlocal shiftwidth=4 tabstop=4
+autocmd BufRead,BufNewFile *.py,*.jsx,*.js setlocal shiftwidth=4 tabstop=4
 
 let mapleader = ","
 let maplocalleader = "-"
