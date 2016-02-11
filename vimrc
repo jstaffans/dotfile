@@ -2,6 +2,8 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+
 set t_Co=256   
 set background=dark
 colorscheme PaperColor
