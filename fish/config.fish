@@ -35,3 +35,6 @@ end
 
 . $HOME/.config/fish/local-config.fish
 . $HOME/.config/fish/functions/z.fish
+
+alias ecl "/usr/local/Cellar/emacs/24.5/bin/emacsclient -t"
+
