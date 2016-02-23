@@ -1,3 +1,6 @@
 bind generic + !git commit --amend
 bind generic U !git push
 bind main B !git rebase -i %(commit)
+
+# general
+color   cursor                  15      241
