@@ -26,11 +26,14 @@ values."
      emacs-lisp
      git
      markdown
-     (clojure :variables clojure-enable-fancify-symbols t)
      auto-completion
      version-control
      html
      javascript
+     web
+     react
+     themes-megapack
+     (clojure :variables clojure-enable-fancify-symbols t)
      ;; spell-checking
      ;; syntax-checking
      )
@@ -93,13 +96,11 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light
-                         solarized-light
-                         solarized-dark
-                         leuven
-                         monokai
+   dotspacemacs-themes '(sanityinc-tomorrow-night
+                         sanityinc-tomorrow-bright
+                         sanityinc-tomorrow-day
                          zenburn)
+
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -108,7 +109,7 @@ values."
                                :size 13
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.3)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -249,6 +250,49 @@ in `dotspacemacs/user-config'."
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (global-hl-line-mode -1)
+
+  (global-company-mode)
+  (setq js2-basic-offset 4)
+
+  ;; JSX in `web-mode`
+  (add-to-list 'auto-mode-alist '("\\.jsx" . web-mode))
+  (defadvice web-mode-highlight-part (around tweak-jsx activate)
+    (if (equal web-mode-content-type "jsx")
+        (let ((web-mode-enable-part-face nil))
+          ad-do-it)
+      ad-do-it))
+
+  ;; JSX tern support
+  (add-hook 'web-mode-hook '(lambda ()
+                              (when (equal web-mode-content-type "jsx")
+                                (tern-mode nil)
+                                (company-mode)
+                                (flycheck-mode)
+                                )))
+  (require 'web-mode)
+  (setq css-indent-offset 2)
+  (setq python-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 4)
+  (setq web-mode-attr-indent-offset 2)
+  (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+
+  (setq flycheck-checkers '(javascript-eslint))
+
+  (require 'flycheck)
+  ;; turn on flychecking globally
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  ;; disable jshint since we prefer eslint checking
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers
+                        '(javascript-jshint)))
+  ;; use eslint with web-mode for jsx files
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  ;; disable json-jsonlist checking for json files
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers
+                        '(json-jsonlist)))
 
   ;; Make evil-mode up/down operate in screen lines instead of logical lines
   (define-key evil-motion-state-map "j" 'evil-next-visual-line)
