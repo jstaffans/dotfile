@@ -1,4 +1,4 @@
-;; -*- mode: emacs-lisp -*-
+;; *- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -7,15 +7,10 @@
 You should not put any user code in this function besides modifying the variable
 values."
   (setq-default
-   ;; Base distribution to use. This is a layer contained in the directory
-   ;; `+distribution'. For now available distributions are `spacemacs-base'
-   ;; or `spacemacs'. (default 'spacemacs)
    dotspacemacs-distribution 'spacemacs
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
-   ;; List of configuration layers to load. If it is the symbol `all' instead
-   ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
      ;; ----------------------------------------------------------------
@@ -30,18 +25,13 @@ values."
      version-control
      html
      javascript
-     web
-     react
      themes-megapack
-     (clojure :variables clojure-enable-fancify-symbols t)
-     ;; spell-checking
-     ;; syntax-checking
-     )
+     (clojure :variables clojure-enable-fancify-symbols t))
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(ws-butler)
+   dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -83,7 +73,7 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner nil
    ;; List of items to show in the startup buffer. If nil it is disabled.
    ;; Possible values are: `recents' `bookmarks' `projects'.
    ;; (default '(recents projects))
@@ -118,7 +108,6 @@ values."
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
    dotspacemacs-major-mode-leader-key ","
-   ;; Major mode leader key accessible in `emacs state' and `insert state'.
    ;; (default "C-M-m)
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
    ;; These variables control whether separate commands are bound in the GUI to
@@ -230,6 +219,7 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup 'trailing
+   ;; hide whitespace
    dotspacemacs-show-trailing-whitespace nil))
 
 (defun dotspacemacs/user-init ()
@@ -252,55 +242,6 @@ This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (global-hl-line-mode -1)
 
-  (global-company-mode)
-
-  (require 'web-mode)
-
-  ;; JSX in `web-mode`
-  (add-to-list 'auto-mode-alist '("\\.jsx" . web-mode))
-  (defadvice web-mode-highlight-part (around tweak-jsx activate)
-    (if (equal web-mode-content-type "jsx")
-        (let ((web-mode-enable-part-face nil))
-          ad-do-it)
-      ad-do-it))
-
-  ;; JSX tern support
-  (add-hook 'web-mode-hook '(lambda ()
-                              (when (equal web-mode-content-type "jsx")
-                                (tern-mode nil)
-                                (company-mode)
-                                (flycheck-mode))))
-  (setq-default
-   ;; js2-mode
-   js2-basic-offset 4
-   ;; web-mode
-   css-indent-offset 4
-   web-mode-markup-indent-offset 4
-   web-mode-css-indent-offset 4
-   web-mode-code-indent-offset 4
-   web-mode-attr-indent-offset 4)
-
-  (with-eval-after-load 'web-mode
-    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
-    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
-    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
-
-  (setq flycheck-checkers '(javascript-eslint))
-
-  (require 'flycheck)
-  ;; turn on flychecking globally
-  (add-hook 'after-init-hook #'global-flycheck-mode)
-  ;; disable jshint since we prefer eslint checking
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(javascript-jshint)))
-  ;; use eslint with web-mode for jsx files
-  ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
-  ;; disable json-jsonlist checking for json files
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(json-jsonlist)))
-
   ;; Make evil-mode up/down operate in screen lines instead of logical lines
   (define-key evil-motion-state-map "j" 'evil-next-visual-line)
   (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
@@ -313,15 +254,15 @@ layers configuration. You are free to put any user code."
   (define-key evil-normal-state-map ",cr" 'comment-or-uncomment-region)
   (define-key evil-visual-state-map ",cr" 'comment-or-uncomment-region)
 
-  (evil-lisp-state-leader ", l")
-  (setq evil-lisp-state-enter-lisp-state-on-command nil)
-
-  (setq evil-move-beyond-eol t)
-
   (define-key evil-normal-state-map (kbd "C-]") 'my-jump-to-tag)
 
   (require 'evil-surround)
-  (global-evil-surround-mode 1))
+
+  (global-evil-surround-mode 1)
+
+  (evil-lisp-state-leader ", l")
+  (setq evil-lisp-state-global t)
+  (setq evil-lisp-state-enter-lisp-state-on-command nil))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
