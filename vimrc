@@ -3,7 +3,6 @@ syntax on
 filetype plugin indent on
 
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
-
 set t_Co=256   
 set background=dark
 colorscheme PaperColor
@@ -27,6 +26,8 @@ autocmd BufRead,BufNewFile *.py,*.jsx,*.js setlocal shiftwidth=4 tabstop=4
 
 let mapleader = ","
 let maplocalleader = "-"
+
+inoremap fd <ESC>
 
 nnoremap <silent> <Leader>+ :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
