@@ -41,7 +41,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(ws-butler)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -229,7 +229,8 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup 'trailing))
+   dotspacemacs-whitespace-cleanup 'trailing
+   dotspacemacs-show-trailing-whitespace nil))
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -252,7 +253,8 @@ layers configuration. You are free to put any user code."
   (global-hl-line-mode -1)
 
   (global-company-mode)
-  (setq js2-basic-offset 4)
+
+  (require 'web-mode)
 
   ;; JSX in `web-mode`
   (add-to-list 'auto-mode-alist '("\\.jsx" . web-mode))
@@ -267,16 +269,21 @@ layers configuration. You are free to put any user code."
                               (when (equal web-mode-content-type "jsx")
                                 (tern-mode nil)
                                 (company-mode)
-                                (flycheck-mode)
-                                )))
-  (require 'web-mode)
-  (setq css-indent-offset 2)
-  (setq python-indent-offset 2)
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 4)
-  (setq web-mode-attr-indent-offset 2)
-  (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+                                (flycheck-mode))))
+  (setq-default
+   ;; js2-mode
+   js2-basic-offset 4
+   ;; web-mode
+   css-indent-offset 4
+   web-mode-markup-indent-offset 4
+   web-mode-css-indent-offset 4
+   web-mode-code-indent-offset 4
+   web-mode-attr-indent-offset 4)
+
+  (with-eval-after-load 'web-mode
+    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
 
   (setq flycheck-checkers '(javascript-eslint))
 
@@ -288,7 +295,7 @@ layers configuration. You are free to put any user code."
                 (append flycheck-disabled-checkers
                         '(javascript-jshint)))
   ;; use eslint with web-mode for jsx files
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
   ;; disable json-jsonlist checking for json files
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
@@ -301,8 +308,6 @@ layers configuration. You are free to put any user code."
   ;; Also in visual mode
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
-
-  (setq show-trailing-whitespace nil)
 
   ;; toggle comments
   (define-key evil-normal-state-map ",cr" 'comment-or-uncomment-region)
