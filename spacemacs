@@ -236,6 +236,14 @@ in `dotspacemacs/user-config'."
   (evil-change-to-previous-state (other-buffer))
   (evil-change-to-previous-state (current-buffer)))
 
+(defun cider-repl-reset ()
+  (interactive)
+  (save-some-buffers)
+  (with-current-buffer (cider-current-repl-buffer)
+    (goto-char (point-max))
+    (insert "(reset)")
+    (cider-repl-return)))
+
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
@@ -259,6 +267,8 @@ layers configuration. You are free to put any user code."
   (require 'evil-surround)
 
   (global-evil-surround-mode 1)
+
+  (global-set-key (kbd "C-c r") 'cider-repl-reset)
 
   (evil-lisp-state-leader ", l")
   (setq evil-lisp-state-global t)
