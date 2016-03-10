@@ -272,7 +272,9 @@ layers configuration. You are free to put any user code."
 
   (evil-lisp-state-leader ", l")
   (setq evil-lisp-state-global t)
-  (setq evil-lisp-state-enter-lisp-state-on-command nil))
+  (setq evil-lisp-state-enter-lisp-state-on-command nil)
+
+  (define-key evil-lisp-state-map "r" 'raise-sexp))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
