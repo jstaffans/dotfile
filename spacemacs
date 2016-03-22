@@ -274,7 +274,9 @@ layers configuration. You are free to put any user code."
   (setq evil-lisp-state-global t)
   (setq evil-lisp-state-enter-lisp-state-on-command nil)
 
-  (define-key evil-lisp-state-map "r" 'raise-sexp))
+  (define-key evil-lisp-state-map "r" 'raise-sexp)
+
+  (setq shell-file-name "/bin/sh"))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
