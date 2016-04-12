@@ -1,11 +1,10 @@
-;; *- mode: emacs-lisp -*-
+;; -*- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
-You should not put any user code in this function besides modifying the variable
-values."
+You should not put any user code in this function besides modifying the variable values."
   (setq-default
    dotspacemacs-distribution 'spacemacs
    ;; List of additional paths where to look for configuration layers.
@@ -276,7 +275,13 @@ layers configuration. You are free to put any user code."
 
   (define-key evil-lisp-state-map "r" 'raise-sexp)
 
-  (setq shell-file-name "/bin/sh"))
+  (setq shell-file-name "/bin/sh")
+
+  ;; TODO
+  ;; (define-key evil-insert-state-map (kbd "C-w l") 'evil-window-right)
+  ;; (define-key evil-insert-state-map (kbd "C-w h") 'evil-window-left)
+
+  (setq cljr-warn-on-eval nil))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
