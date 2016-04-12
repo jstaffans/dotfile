@@ -16,21 +16,29 @@ function aws-creds-fish
 end
                  
 function aws-creds-fish-erase
-    set --erase AWS_ACCESS_KEY_ID
-    set --erase AWS_ACCESS_KEY
-    set --erase AWS_SECRET_ACCESS_KEY
-    set --erase AWS_SECRET_KEY
-    set --erase RPROMPT
-    set --erase AWS_CREDS_NAME
+  set --erase AWS_ACCESS_KEY_ID
+  set --erase AWS_ACCESS_KEY
+  set --erase AWS_SECRET_ACCESS_KEY
+  set --erase AWS_SECRET_KEY
+  set --erase RPROMPT
+  set --erase AWS_CREDS_NAME
 end
                                                                                   
 function fish_prompt
-        set last_status $status
-        set_color $fish_color_cwd
-        printf '%s' (prompt_pwd)
-        set_color normal
-        printf '%s ' (__fish_git_prompt)
-        set_color normal
+  set last_status $status
+  set_color $fish_color_cwd
+  printf '%s' (prompt_pwd)
+  set_color normal
+  printf '%s ' (__fish_git_prompt)
+  set_color normal
+
+  # Show the conda environment, calculate __fish_prompt_conda only once
+  if set -q CONDA_DEFAULT_ENV
+    if not set -q __fish_prompt_conda
+      set -g __fish_prompt_conda "("$CONDA_DEFAULT_ENV")" "$__fish_prompt_normal "
+    end
+    echo -n $__fish_prompt_conda
+  end
 end
 
 . $HOME/.config/fish/local-config.fish
@@ -38,3 +46,4 @@ end
 
 alias ecl "/usr/local/Cellar/emacs/24.5/bin/emacsclient -t"
 
+set -x GPG_AGENT_INFO ~/.gnupg/S.gpg-agent:(ps -A | grep -m1 "gpg-agent --daemon" | awk '{print $1}'):1
