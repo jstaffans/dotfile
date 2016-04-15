@@ -281,7 +281,11 @@ layers configuration. You are free to put any user code."
   ;; (define-key evil-insert-state-map (kbd "C-w l") 'evil-window-right)
   ;; (define-key evil-insert-state-map (kbd "C-w h") 'evil-window-left)
 
-  (setq cljr-warn-on-eval nil))
+  (setq cljr-warn-on-eval nil)
+  
+  (setq grep-find-template "find . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
+
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
