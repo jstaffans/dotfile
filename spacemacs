@@ -282,7 +282,12 @@ layers configuration. You are free to put any user code."
   ;; (define-key evil-insert-state-map (kbd "C-w h") 'evil-window-left)
 
   (setq cljr-warn-on-eval nil)
-  
+
+  (setq cider-cljs-lein-repl
+    "(do (require 'figwheel-sidecar.repl-api)
+       (figwheel-sidecar.repl-api/start-figwheel!)
+       (figwheel-sidecar.repl-api/cljs-repl))")
+
   (setq grep-find-template "find . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
 
   )
