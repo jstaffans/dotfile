@@ -247,6 +247,8 @@ in `dotspacemacs/user-config'."
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+  (setq vc-follow-symlinks t)
+
   (global-hl-line-mode -1)
 
   ;; Make evil-mode up/down operate in screen lines instead of logical lines
@@ -276,10 +278,6 @@ layers configuration. You are free to put any user code."
   (define-key evil-lisp-state-map "r" 'raise-sexp)
 
   (setq shell-file-name "/bin/sh")
-
-  ;; TODO
-  ;; (define-key evil-insert-state-map (kbd "C-w l") 'evil-window-right)
-  ;; (define-key evil-insert-state-map (kbd "C-w h") 'evil-window-left)
 
   (setq cljr-warn-on-eval nil)
 
