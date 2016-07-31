@@ -41,9 +41,34 @@ function fish_prompt
   end
 end
 
+function bind_bang
+    switch (commandline -t)[-1]
+        case "!"
+            commandline -t $history[1]; commandline -f repaint
+        case "*"
+            commandline -i !
+    end
+end
+
+function bind_dollar
+    switch (commandline -t)[-1]
+        case "!"
+            commandline -t ""
+            commandline -f history-token-search-backward
+        case "*"
+            commandline -i '$'
+    end
+end
+
+function fish_user_key_bindings
+    bind ! bind_bang
+    bind '$' bind_dollar
+end
+
 . $HOME/.config/fish/local-config.fish
 . $HOME/.config/fish/functions/z.fish
 
 alias ecl "/usr/local/Cellar/emacs/24.5/bin/emacsclient -t"
 
 set -x GPG_AGENT_INFO ~/.gnupg/S.gpg-agent:(ps -A | grep -m1 "gpg-agent --daemon" | awk '{print $1}'):1
+
