@@ -17,10 +17,8 @@ You should not put any user code in this function besides modifying the variable
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     emacs-lisp
      markdown
      auto-completion
-     version-control
      html
      javascript
      typescript
@@ -38,7 +36,7 @@ You should not put any user code in this function besides modifying the variable
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
-   dotspacemacs-delete-orphan-packages t))
+   dotspacemacs-delete-orphan-packages nil))
 
 (defun dotspacemacs/init ()
   "Initialization function.
