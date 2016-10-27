@@ -18,12 +18,14 @@ You should not put any user code in this function besides modifying the variable
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      emacs-lisp
-     git
      markdown
      auto-completion
      version-control
      html
      javascript
+     typescript
+     python
+     git
      themes-megapack
      (clojure :variables clojure-enable-fancify-symbols t))
    ;; List of additional packages that will be installed without being
@@ -288,6 +290,7 @@ layers configuration. You are free to put any user code."
 
   (setq grep-find-template "find . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
 
+  (setq backup-directory-alist `(("." . "~/.saves")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
