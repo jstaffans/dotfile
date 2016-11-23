@@ -12,6 +12,8 @@ You should not put any user code in this function besides modifying the variable
    dotspacemacs-configuration-layer-path '()
    dotspacemacs-configuration-layers
    '(
+     yaml
+     python
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -249,6 +251,14 @@ This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (setq vc-follow-symlinks t)
 
+  ;; Enable mouse support -- still not smooth though
+  (unless window-system
+    (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
+    (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
+
+  ;; enable normal mouse interactions
+  (xterm-mouse-mode -1)
+ 
   (global-hl-line-mode -1)
 
   ;; Make evil-mode up/down operate in screen lines instead of logical lines
