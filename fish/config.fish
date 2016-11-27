@@ -68,7 +68,6 @@ end
 . $HOME/.config/fish/local-config.fish
 . $HOME/.config/fish/functions/z.fish
 
-alias ecl "/usr/local/Cellar/emacs/24.5/bin/emacsclient -t"
-
-set -x GPG_AGENT_INFO ~/.gnupg/S.gpg-agent:(ps -A | grep -m1 "gpg-agent --daemon" | awk '{print $1}'):1
+# alias ecl "/usr/local/Cellar/emacs/24.5/bin/emacsclient -t"
+# set -x GPG_AGENT_INFO ~/.gnupg/S.gpg-agent:(ps -A | grep -m1 "gpg-agent --daemon" | awk '{print $1}'):1
 
