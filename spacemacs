@@ -253,8 +253,7 @@ This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (setq vc-follow-symlinks t)
 
-;;  (set-face-attribute 'default nil :family "Hack")
-;;  (set-face-attribute 'default nil :height 100)
+  (global-company-mode)
 
   ;; Enable mouse support -- still not smooth though
   (unless window-system
