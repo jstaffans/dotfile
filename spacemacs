@@ -22,18 +22,12 @@ You should not put any user code in this function besides modifying the variable
      nginx
      yaml
      python
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
      markdown
      auto-completion
      html
      react
      javascript
      typescript
-     python
      git
      themes-megapack
      (clojure :variables clojure-enable-fancify-symbols t))
