@@ -386,9 +386,7 @@ layers configuration. You are free to put any user code."
     :modes react-mode
     :next-checkers ((error . javascript-eslint))
     )
-  (add-to-list 'flycheck-checkers 'javascript-flow)
-
-  (message "end of user-config"))
+  (add-to-list 'flycheck-checkers 'javascript-flow))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
