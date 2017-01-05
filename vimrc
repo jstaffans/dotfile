@@ -82,6 +82,8 @@ nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 " JSON pretty print with Python
 nnoremap <f5> :%!python -m json.tool<CR>:w<CR>
 
+" Livedown preview
+nmap gm :LivedownToggle<CR>
 
 
 
