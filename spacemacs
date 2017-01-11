@@ -231,9 +231,28 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
-  (setq-default js2-basic-offset 2
-                typescript-indent-level 4
-                js-indent-level 2))
+  )
+
+(defun my-setup-indent (n)
+  (setq-local js2-basic-offset n)
+  (setq-local typescript-indent-level n)
+  (setq-local web-mode-markup-indent-offset n)
+  (setq-local web-mode-css-indent-offset n)
+  (setq-local web-mode-code-indent-offset n)
+  (setq-local css-indent-offset n))
+
+(defun artory-code-style ()
+  (interactive)
+  (message "Artory code style!")
+  ;; use tab instead of space
+  (my-setup-indent 4))
+
+(defun personal-code-style ()
+  (interactive)
+  (message "Personal code style!")
+  (my-setup-indent 2))
+
+(personal-code-style)
 
 (defun my-jump-to-tag ()
   (interactive)
