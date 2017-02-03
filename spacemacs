@@ -19,9 +19,10 @@ You should not put any user code in this function besides modifying the variable
    dotspacemacs-configuration-layer-path '()
    dotspacemacs-configuration-layers
    '(
+     org
+     html
      nginx
      yaml
-     python
      markdown
      auto-completion
      html
@@ -30,12 +31,17 @@ You should not put any user code in this function besides modifying the variable
      typescript
      git
      themes-megapack
+     (python :variables python-test-runner 'pytest)
      (clojure :variables clojure-enable-fancify-symbols t))
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages 
+   '(
+     ox-reveal
+     epresent
+   )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
