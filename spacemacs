@@ -19,7 +19,6 @@ You should not put any user code in this function besides modifying the variable
    dotspacemacs-configuration-layer-path '()
    dotspacemacs-configuration-layers
    '(
-     org
      html
      nginx
      yaml
@@ -37,11 +36,7 @@ You should not put any user code in this function besides modifying the variable
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages 
-   '(
-     ox-reveal
-     epresent
-   )
+   dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
