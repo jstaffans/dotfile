@@ -65,6 +65,11 @@ function fish_user_key_bindings
     bind '$' bind_dollar
 end
 
+# source highlighting for less (with brew install source-highlight)
+set hilite (which src-hilite-lesspipe.sh)
+set -x LESSOPEN "| $hilite %s"
+set -x LESS " -R -X -F "
+
 . $HOME/.config/fish/local-config.fish
 . $HOME/.config/fish/functions/z.fish
 
