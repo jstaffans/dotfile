@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: es6-import
+# key: esi
+# --
+import { $1 } from '$2';
