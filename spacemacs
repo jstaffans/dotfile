@@ -40,20 +40,19 @@ values."
      markdown
      auto-completion
      html
-     react
      javascript
      typescript
      haskell
      git
      themes-megapack
-     (python :variables python-test-runner 'pytest)
+     (python :variables python-sort-imports-on-save t)
      (clojure :variables clojure-enable-fancify-symbols t))
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(nodejs-repl eslintd-fix rjsx-mode)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -297,7 +296,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   )
 
 (defun my-setup-indent (n)
-  (setq js2-basic-offset 2)
+  (setq js2-basic-offset n)
+  (setq js-indent-level n)
   (setq typescript-indent-level n)
   (setq web-mode-markup-indent-offset n)
   (setq web-mode-css-indent-offset n)
@@ -305,26 +305,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq web-mode-attr-indent-offset n)
   (setq css-indent-offset n)
 
-  (setq-default js2-basic-offset 2)
+  (setq-default js2-basic-offset n)
+  (setq-default js-indent-level n)
   (setq-default typescript-indent-level n)
   (setq-default web-mode-markup-indent-offset n)
   (setq-default web-mode-css-indent-offset n)
   (setq-default web-mode-code-indent-offset n)
   (setq-default web-mode-attr-indent-offset n)
   (setq-default css-indent-offset n))
-
-(defun artory-code-style ()
-  (interactive)
-  (message "Artory code style!")
-  ;; use tab instead of space
-  (my-setup-indent 4))
-
-(defun personal-code-style ()
-  (interactive)
-  (message "Personal code style!")
-  (my-setup-indent 2))
-
-(artory-code-style)
 
 (defun my-jump-to-tag ()
   (interactive)
@@ -341,6 +329,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (insert "(reset)")
     (cider-repl-return)))
 
+;; fast eslint_d formatting on save using eslintd-fix
+(add-hook 'js2-mode-hook 'eslintd-fix-mode)
+
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
@@ -348,6 +339,9 @@ layers configuration. You are free to put any user code."
   (setq vc-follow-symlinks t)
 
   (global-company-mode)
+
+  ;; only start autosuggests after a minimum of two characters
+  (setq company-minimum-prefix-length 2)
 
   ;; Enable mouse support -- still not smooth though
   (unless window-system
@@ -384,7 +378,7 @@ layers configuration. You are free to put any user code."
 
   (define-key evil-lisp-state-map "r" 'raise-sexp)
 
-  (setq shell-file-name "/bin/sh")
+  (setq shell-file-name "/bin/bash")
 
   (setq cljr-warn-on-eval nil)
 
@@ -406,6 +400,10 @@ layers configuration. You are free to put any user code."
 	(defadvice grep (after delete-grep-header activate) (delete-grep-header))
 	(defadvice rgrep (after delete-grep-header activate) (delete-grep-header))
 
+  ;; https://gist.github.com/pesterhazy/fabd629fbb89a6cd3d3b92246ff29779#file-ripgrep-in-emacs-md
+  (evil-leader/set-key "/" 'spacemacs/helm-project-do-ag)
+  (setq helm-ag-base-command "rg --vimgrep --no-heading --smart-case")
+
   (setq backup-directory-alist `(("." . "~/.saves")))
 
   ;; set helm fuzzy match options
@@ -413,20 +411,13 @@ layers configuration. You are free to put any user code."
   (setq helm-buffers-fuzzy-matching nil)
   (setq helm-recentf-fuzzy-match t)
 
+  ;; Trying out rjsx-mode instead of react-mode
+  ;; (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+  ;; Make C-d insert ending tag in rjsx-mode
+  (define-key evil-insert-state-map (kbd "C-d") nil)
+
   ;; Javascript/HTML/CSS indentation
-  (setq sc-indent-offset 2)
-  (setq-default
-   evil-shift-width sc-indent-offset
-   ;; jssc-indent-offset-mode
-   jssc-indent-offset-basic-offset sc-indent-offset
-   ;; json-mode
-   js-indent-level sc-indent-offset
-   ;; web-mode
-   css-indent-offset sc-indent-offset
-   web-mode-markup-indent-offset sc-indent-offset
-   web-mode-css-indent-offset sc-indent-offset
-   web-mode-code-indent-offset sc-indent-offset
-   web-mode-attr-indent-offset sc-indent-offset)
+  (my-setup-indent 2)
 
   (clean-aindent-mode -1)
 
@@ -458,7 +449,7 @@ layers configuration. You are free to put any user code."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (intero hlint-refactor hindent helm-hoogle haskell-snippets company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode plantuml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl epresent org-projectile org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot yapfify yaml-mode web-mode web-beautify tagedit smeargle slim-mode scss-mode sass-mode pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements orgit org nginx-mode mmm-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd live-py-mode less-css-mode json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc hy-mode helm-pydoc helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md evil-magit magit magit-popup git-commit with-editor emmet-mode cython-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-anaconda company coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode auto-yasnippet yasnippet anaconda-mode pythonic ac-ispell auto-complete tide typescript-mode flycheck ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
+    (rjsx-mode eslintd-fix phoenix-dark-mono-theme organic-green-theme org-category-capture obsidian-theme mustang-theme dakrone-theme busybee-theme zenburn-theme ujelly-theme tao-theme tango-plus-theme sublime-themes phoenix-dark-pink-theme monokai-theme jbeans-theme jazz-theme inkpot-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme espresso-theme dracula-theme darktooth-theme darkokai-theme darkburn-theme cyberpunk-theme apropospriate-theme alect-themes winum solarized-theme madhat2r-theme fuzzy nodejs-repl intero hlint-refactor hindent helm-hoogle haskell-snippets company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode plantuml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl epresent org-projectile org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot yapfify yaml-mode web-mode web-beautify tagedit smeargle slim-mode scss-mode sass-mode pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements orgit org nginx-mode mmm-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd live-py-mode less-css-mode json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc hy-mode helm-pydoc helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md evil-magit magit magit-popup git-commit with-editor emmet-mode cython-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-anaconda company coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode auto-yasnippet yasnippet anaconda-mode pythonic ac-ispell auto-complete tide typescript-mode flycheck ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
