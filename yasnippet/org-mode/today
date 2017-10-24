@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name : today
+# key : today
+# --
+`(org-insert-heading nil)`[`(format-time-string "%Y-%m-%d %a" (current-time))`] 
+${1:Note}
