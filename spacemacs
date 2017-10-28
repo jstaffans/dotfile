@@ -435,6 +435,9 @@ layers configuration. You are free to put any user code."
   (spacemacs/set-leader-keys-for-major-mode 'epresent-mode "S" 'epresent-toggle-hide-src-block)
   (spacemacs/set-leader-keys-for-major-mode 'epresent-mode "t" 'epresent-top)
 
+  (add-to-list 'warning-suppress-types '(yasnippet backquote-change))
+  (setq org-bullets-bullet-list '("*" "*" "*" "*"))
+
   ;; Let flycheck handle parse errors
   ;; https://github.com/magnars/.emacs.d/blob/bc02c2d8853afc8ee61cc705945b47c725b9fb65/settings/setup-js2-mode.el#L17
   (setq-default js2-mode-show-parse-errors nil)
