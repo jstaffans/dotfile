@@ -642,6 +642,7 @@ autorunApps =
    "redshift",
    "slack",
    "imwheel",
+   "dropbox",
 }
 if autorun then
    for app = 1, #autorunApps do
