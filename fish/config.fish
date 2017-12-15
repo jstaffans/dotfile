@@ -39,6 +39,10 @@ function fish_prompt
     end
     echo -n $__fish_prompt_conda
   end
+
+  if set -q VIRTUAL_ENV
+    echo -n -s (set_color -b blue white) "(" (basename "$VIRTUAL_ENV") ")" (set_color normal) " "
+  end
 end
 
 function bind_bang
