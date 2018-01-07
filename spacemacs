@@ -45,7 +45,7 @@ values."
      haskell
      git
      themes-megapack
-     (python :variables python-sort-imports-on-save t)
+     (python :variables python-sort-imports-on-save t python-test-runner 'pytest)
      (clojure :variables clojure-enable-fancify-symbols t)
      elixir)
 
