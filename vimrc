@@ -1,7 +1,20 @@
-execute pathogen#infect()
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
+set nocp
+set wildmenu
+set mouse=a
+
+if filereadable(expand("~/.vimrc.bundles"))
+  source ~/.vimrc.bundles
+endif
 
 autocmd BufNewFile,BufFilePre,BufRead Jenkinsfile set filetype=groovy
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
@@ -12,9 +25,6 @@ colorscheme PaperColor
 set hidden
 set backspace=indent,eol,start
 
-set nocp
-set wildmenu
-set mouse=a
 set guifont=Menlo:h12
 set tabstop=2
 set shiftwidth:2
