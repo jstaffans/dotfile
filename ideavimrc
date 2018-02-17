@@ -1,0 +1,41 @@
+syntax on
+filetype plugin indent on
+
+set nocp
+set wildmenu
+set visualbell
+
+if filereadable(expand("~/.vimrc.bundles"))
+  source ~/.vimrc.bundles
+endif
+
+let mapleader = ","
+let maplocalleader = "-"
+
+inoremap fd <ESC>
+
+nnoremap <silent> <Leader>+ :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
+
+nnoremap <Leader>O :only<CR>
+ 
+nnoremap j gj
+nnoremap k gk
+ 
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+nnoremap <Leader>w <C-w>v<C-w>l
+set splitright
+
+" work with pwd
+map <Leader>cd :cd %:p:h <CR>
+map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+
+" substitute all
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+
+
+
+
