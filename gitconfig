@@ -15,19 +15,20 @@
   dc = diff --cached
   pu = pull --rebase
   sd = stash show -p
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustexitcode = true
-[merge]
-	tool = Kaleidoscope
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-[difftool]
-	prompt = false
-[mergetool]
-	prompt = false
-[diff]
-	tool = Kaleidoscope
+  rmb = !sh -c 'git branch -r -d origin/$0 && git push origin :$0'
+#[mergetool "Kaleidoscope"]
+#	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+#	trustexitcode = true
+#[merge]
+#	tool = Kaleidoscope
+#[difftool "Kaleidoscope"]
+#	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+#[difftool]
+#	prompt = false
+#[mergetool]
+#	prompt = false
+#[diff]
+#	tool = Kaleidoscope
 [github]
 	user = jstaffans
 [ghi]
@@ -36,4 +37,3 @@
   path = .gitconfig.local
 [url "git@github.com:"]
   insteadOf = gh:
-
