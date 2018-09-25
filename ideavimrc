@@ -22,19 +22,12 @@ nnoremap <Leader>O :only<CR>
 nnoremap j gj
 nnoremap k gk
  
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
-
 nnoremap <Leader>w <C-w>v<C-w>l
 set splitright
 
 " work with pwd
 map <Leader>cd :cd %:p:h <CR>
 map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-
-" substitute all
-nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
 
 
