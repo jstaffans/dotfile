@@ -37,3 +37,12 @@
   path = .gitconfig.local
 [url "git@github.com:"]
   insteadOf = gh:
+[url "ssh://git@gitlab.relexsolutions.com"]
+insteadOf = https://gitlab.relexsolutions.com
+
+[merge]
+	conflictStyle = diff3
+[gpg]
+	program = /usr/local/bin/gpg
+[init]
+	defaultBranch = main

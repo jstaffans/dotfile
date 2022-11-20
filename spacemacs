@@ -31,10 +31,14 @@ values."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(ansible
+   '((elixir :variables elixir-backend 'lsp)
+     (go :variables go-tab-width 4 go-backend 'lsp)
+     (lsp :variables lsp-ui-doc-enable nil)
+     vue
+     dap
+     sql
+     ansible
      csv
-     haskell
-     ruby
      org
      html
      nginx
@@ -48,14 +52,13 @@ values."
      themes-megapack
      latex
      (python :variables python-sort-imports-on-save t python-test-runner 'pytest)
-     (clojure :variables clojure-enable-fancify-symbols t)
-     (go :variables go-tab-width 4 gofmt-command "goimports" go-use-gometalinter t))
+     (clojure :variables clojure-enable-fancify-symbols t))
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(eslintd-fix rjsx-mode)
+   dotspacemacs-additional-packages '()
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -87,9 +90,9 @@ values."
    ;; This variable has no effect if Emacs is launched with the parameter
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
-   dotspacemacs-elpa-https t
+   dotspacemacs-elpa-https nil
    ;; Maximum allowed time in seconds to contact an ELPA repository.
-   dotspacemacs-elpa-timeout 5
+   dotspacemacs-elpa-timeout 30
    ;; If non nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
@@ -396,14 +399,9 @@ layers configuration. You are free to put any user code."
   ;; (setq evil-lisp-state-enter-lisp-state-on-command nil)
   ;; (define-key evil-lisp-state-map "r" 'raise-sexp)
 
-  (setq shell-file-name "/bin/bash")
+  (setq shell-file-name "/usr/local/bin/fish")
 
   (setq cljr-warn-on-eval nil)
-
-  (setq cider-cljs-lein-repl
-    "(do (require 'figwheel-sidecar.repl-api)
-       (figwheel-sidecar.repl-api/start-figwheel!)
-       (figwheel-sidecar.repl-api/cljs-repl))")
 
   ;; Fish-friendly grep template
   (setq grep-find-template "find . <X> -type f <F> -exec grep <C> -nH -e <R> \\{\\} +")
@@ -444,11 +442,6 @@ layers configuration. You are free to put any user code."
   ;; JS/HTML
   (add-hook 'js2-mode-hook 'use-js-executables-from-node-modules)
 
-  ;; Trying out rjsx-mode instead of react-mode
-  ;; (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
-  ;; Make C-d insert ending tag in rjsx-mode
-  ;; (define-key evil-insert-state-map (kbd "C-d") nil)
-
   ;; Javascript/HTML/CSS indentation
   (my-setup-indent 2)
 
@@ -463,42 +456,12 @@ layers configuration. You are free to put any user code."
   ;; https://github.com/magnars/.emacs.d/blob/bc02c2d8853afc8ee61cc705945b47c725b9fb65/settings/setup-js2-mode.el#L17
   (setq-default js2-mode-show-parse-errors nil)
   (setq-default js2-mode-show-strict-warnings nil)
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  )
 
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode material-theme tangotango-theme seti-theme moe-theme flatland-theme autothemer clues-theme ample-theme rjsx-mode eslintd-fix phoenix-dark-mono-theme organic-green-theme org-category-capture obsidian-theme mustang-theme dakrone-theme busybee-theme zenburn-theme ujelly-theme tao-theme tango-plus-theme sublime-themes phoenix-dark-pink-theme monokai-theme jbeans-theme jazz-theme inkpot-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme espresso-theme dracula-theme darktooth-theme darkokai-theme darkburn-theme cyberpunk-theme apropospriate-theme alect-themes winum solarized-theme madhat2r-theme fuzzy nodejs-repl intero hlint-refactor hindent helm-hoogle haskell-snippets company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode plantuml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl epresent org-projectile org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot yapfify yaml-mode web-mode web-beautify tagedit smeargle slim-mode scss-mode sass-mode pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements orgit org nginx-mode mmm-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd live-py-mode less-css-mode json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc hy-mode helm-pydoc helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md evil-magit magit magit-popup git-commit with-editor emmet-mode cython-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-anaconda company coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode auto-yasnippet yasnippet anaconda-mode pythonic ac-ispell auto-complete tide typescript-mode flycheck ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (flycheck-gometalinter ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode material-theme tangotango-theme seti-theme moe-theme flatland-theme autothemer clues-theme ample-theme rjsx-mode eslintd-fix phoenix-dark-mono-theme organic-green-theme org-category-capture obsidian-theme mustang-theme dakrone-theme busybee-theme zenburn-theme ujelly-theme tao-theme tango-plus-theme sublime-themes phoenix-dark-pink-theme monokai-theme jbeans-theme jazz-theme inkpot-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme espresso-theme dracula-theme darktooth-theme darkokai-theme darkburn-theme cyberpunk-theme apropospriate-theme alect-themes winum solarized-theme madhat2r-theme fuzzy nodejs-repl intero hlint-refactor hindent helm-hoogle haskell-snippets company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode plantuml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl epresent org-projectile org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot yapfify yaml-mode web-mode web-beautify tagedit smeargle slim-mode scss-mode sass-mode pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements orgit org nginx-mode mmm-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd live-py-mode less-css-mode json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc hy-mode helm-pydoc helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md evil-magit magit magit-popup git-commit with-editor emmet-mode cython-mode company-web web-completion-data company-tern dash-functional tern company-statistics company-anaconda company coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider seq queue clojure-mode auto-yasnippet yasnippet anaconda-mode pythonic ac-ispell auto-complete tide typescript-mode flycheck ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:background nil)))))
+  ;; Python
+  (setq python-shell-completion-native-enable nil)
+
+  (setq elixir-ls-path "/Users/johannesstaffans/elixir-ls/release")
 )
+
+(setq custom-file "~/.emacs.d/.cache/.custom-settings")
+(load custom-file)

@@ -16,15 +16,21 @@ call plug#begin('~/.vim/bundle')
 Plug 'flazz/vim-colorschemes'
 Plug 'tpope/vim-sensible'
 Plug 'christoomey/vim-run-interactive'
+Plug 'easymotion/vim-easymotion'
 Plug 'pangloss/vim-javascript'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
-Plug 'vim-scripts/L9'
-Plug 'vim-scripts/FuzzyFinder'
-Plug 'mfukar/robotframework-vim'
+" Plug 'vim-scripts/L9'
+" Plug 'vim-scripts/FuzzyFinder'
 Plug 'shime/vim-livedown'
+Plug 'hashivim/vim-terraform'
+Plug 'tommcdo/vim-lion'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'yorinasub17/vim-terragrunt', {'branch': 'main'}
+Plug 'google/vim-jsonnet'
 
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local

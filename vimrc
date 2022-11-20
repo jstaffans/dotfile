@@ -48,11 +48,19 @@ nnoremap <silent> <Leader>- :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 nnoremap <Leader>N :NERDTreeFind<CR>
 nnoremap <Leader>M :NERDTreeToggle<CR>
 
-" Fuzzy Finder
-nnoremap <Leader>f :FufFile<CR>
-nnoremap <Leader>F :FufCoverageFile<CR>
-nnoremap <Leader>a :FufChangeList<CR>
-nnoremap <Leader>b :FufBuffer<CR>
+" fzf (fuzzy finder)
+nmap <Leader>f :GFiles<CR>
+nmap <Leader>F :Files<CR>
+nmap <Leader>b :Buffers<CR>
+nmap <Leader>h :History<CR>
+nmap <Leader>l :BLines<CR>
+nmap <Leader>L :Lines<CR>
+nmap <Leader>' :Marks<CR>
+nmap <Leader>t :BTags<CR>
+nmap <Leader>T :Tags<CR>
+nmap <Leader>/ :Ag<Space>
+nmap <Leader>C :Commands<CR>
+nmap <Leader>: :History:<CR>
 
 " EasyMotion
 map <Leader>m <Plug>(easymotion-prefix)
@@ -97,6 +105,8 @@ nnoremap <f5> :%!python -m json.tool<CR>:w<CR>
 " Livedown preview
 nmap gm :LivedownToggle<CR>
 
+"Remove all trailing whitespace by pressing F8
+nnoremap <F8> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
 
 
